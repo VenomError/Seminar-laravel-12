@@ -32,10 +32,11 @@ return [
     ],
     'Transaksi' => [
         addNav('dashboard.transaksi.data-pendaftar', 'Data Pendaftar', 'ti ti-ticket'),
-        addNav('dashboard.transaksi.data-penbayaran', 'Data Pembayaran', 'ti ti-cash'),
+        addNav('dashboard.transaksi.data-pembayaran', 'Data Pembayaran', 'ti ti-cash'),
     ],
     'Laporan' => [
-        addNav('dashboard.laporan.riwayat-transaksi', 'Riwayat Absensi', 'ti ti-clipboard-check'),
+        addNav('dashboard.laporan.riwayat-absensi', 'Riwayat Absensi', 'ti ti-clipboard-check'),
+        addNav('dashboard.laporan.riwayat-transaksi', 'Riwayat Transaksi', 'ti ti-database-dollar'),
     ],
     'settings' => [
         addNav('dashboard.settings.account', 'Account', 'ti ti-user-circle'),

@@ -84,8 +84,8 @@ new class extends Component {
                             model="password" placeholder="Input New Password" />
 
                         <div class="d-flex  justify-content-end align-items-center">
-                            <button type="submit" class="btn btn-success" wire:loading.attr="disabled">
-                                <span wire:loading.remove>Add Account</span>
+                            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
+                                <span wire:loading.remove>Simpan</span>
                                 <span wire:loading>Loading...</span>
                             </button>
                         </div>

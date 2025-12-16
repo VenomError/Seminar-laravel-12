@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enum\UserRole;
 use App\Models\Seminar;
 use App\Models\Registration;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -61,5 +62,19 @@ class User extends Authenticatable
     public function registrations()
     {
         return $this->hasMany(Registration::class);
+    }
+
+    // scoped
+    public function scopeAdmin(Builder $query): Builder
+    {
+        return $this->whereRole(UserRole::ADMIN);
+    }
+    public function scopeCommittee(Builder $query): Builder
+    {
+        return $this->whereRole(UserRole::COMMITTEE);
+    }
+    public function scopeParticipant(Builder $query): Builder
+    {
+        return $this->whereRole(UserRole::PARTICIPANT);
     }
 }

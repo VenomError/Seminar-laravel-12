@@ -13,6 +13,13 @@ new class extends Component {
     public $perPage = 10;
     public $role;
     public $search;
+
+    public function updatedSearch($value)
+    {
+        $this->search = rtrim($value);
+        $this->search = ltrim($value);
+    }
+
     #[Computed]
     public function accounts()
     {
@@ -172,6 +179,8 @@ new class extends Component {
                                         </td>
                                         <td>
                                             <div class="btn-group">
+                                                <a href="{{ route('dashboard.master-data.account-detail', ['user' => $user]) }}"
+                                                    class="link-reset fs-18 p-1"> <i class="ti ti-eye"></i></a>
                                                 <a href="{{ route('dashboard.master-data.account-edit', ['user' => $user]) }}"
                                                     class="link-reset fs-18 p-1"> <i class="ti ti-pencil"></i></a>
                                                 <a wire:click="confirmDelete({{ $user->id }})"

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Enum\PaymentStatus;
 use App\Models\User;
 use App\Models\Registration;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,8 @@ class Payment extends Model
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2'
+        'amount' => 'decimal:2',
+        'status' => PaymentStatus::class
     ];
 
     public function registration()

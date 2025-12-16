@@ -21,7 +21,7 @@ new class extends Component {
     }
 
     #[Computed]
-    public function transactions()
+    public function payments()
     {
         $query = Payment::with([
             'registration.user',
@@ -29,13 +29,11 @@ new class extends Component {
             'verifier'
         ]);
 
-        // filter status payment
         $query->when(
             $this->status,
             fn($q) => $q->where('status', $this->status)
         );
 
-        // search
         $query->when($this->search, function ($q) {
             $search = trim($this->search);
 
@@ -62,35 +60,26 @@ new class extends Component {
             ->paginate($this->perPage);
     }
 
-    #[Computed]
-    public function totalAmount()
-    {
-        return Payment::where('status', PaymentStatus::VERIFIED)->sum('amount');
-    }
-
     public function resetFilter()
     {
         $this->reset('search', 'status');
     }
 };?>
-<div>
-    <x-page-title title="Riwayat Transaksi" />
 
-    {{-- SUMMARY --}}
-    <div class="alert alert-info mb-3">
-        <strong>Total Transaksi Berhasil:</strong>
-        Rp {{ number_format($this->totalAmount(), 0, ',', '.') }}
-    </div>
+<div>
+    <x-page-title title="Data Pembayaran" />
 
     {{-- FILTER --}}
     <div class="d-flex align-items-center justify-content-between flex-wrap mb-3">
-        <input type="search" class="form-control form-control-sm w-auto" placeholder="Search ticket / user / seminar..."
-            wire:model.live="search">
+        <div class="search-set">
+            <input type="search" class="form-control form-control-sm" placeholder="Search ticket / user / seminar..."
+                wire:model.live="search">
+        </div>
 
         <div class="d-flex gap-2">
             <select class="form-select form-select-sm" wire:model.live="status">
                 <option value="">All Status</option>
-                @foreach (\App\Enum\PaymentStatus::values() as $status)
+                @foreach (PaymentStatus::values() as $status)
                     <option value="{{ $status }}">{{ str($status)->title() }}</option>
                 @endforeach
             </select>
@@ -102,7 +91,7 @@ new class extends Component {
     </div>
 
     {{-- TABLE --}}
-    <div class="card" id="table-transaction">
+    <div class="card" id="table-payment">
         <div class="card-body table-responsive">
             <table class="table mb-0">
                 <thead>
@@ -113,70 +102,74 @@ new class extends Component {
                         <th>Seminar</th>
                         <th>Amount</th>
                         <th>Status</th>
-                        <th>Tanggal</th>
+                        <th>Verifier</th>
                         <th>Bukti</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @forelse ($this->transactions() as $trx)
+                    @foreach ($this->payments() as $payment)
                         <tr>
-                            <td>{{ $trx->id }}</td>
+                            <td>{{ $payment->id }}</td>
 
                             <td class="fw-semibold text-nowrap">
-                                {{ $trx->registration?->ticket_code }}
+                                {{ $payment->registration?->ticket_code }}
                             </td>
 
                             <td class="text-nowrap">
                                 <div class="fw-semibold">
-                                    {{ $trx->registration?->user?->name }}
+                                    {{ $payment->registration?->user?->name }}
                                 </div>
                                 <small class="text-muted">
-                                    {{ $trx->registration?->user?->email }}
+                                    {{ $payment->registration?->user?->email }}
                                 </small>
                             </td>
 
                             <td class="text-nowrap">
-                                {{ $trx->registration?->seminar?->title }}
+                                {{ $payment->registration?->seminar?->title }}
                             </td>
 
                             <td class="text-nowrap">
-                                Rp {{ number_format($trx->amount, 0, ',', '.') }}
+                                Rp {{ number_format($payment->amount, 0, ',', '.') }}
                             </td>
 
                             <td>
-                                <span class="badge bg-{{ $trx->status->color() }}">
-                                    {{ str($trx->status->value)->title() }}
+                                <span class="badge bg-{{ $payment->status->color() }}">
+                                    {{ str($payment->status->value)->title() }}
                                 </span>
                             </td>
 
                             <td class="text-nowrap">
-                                {{ $trx->created_at->format('d M Y H:i') }}
+                                {{ $payment->verifier?->name ?? '-' }}
                             </td>
 
                             <td>
-                                @if ($trx->proof_path)
-                                    <a href="{{ Storage::url($trx->proof_path) }}" target="_blank"
+                                @if ($payment->proof_path)
+                                    <a href="{{ Storage::url($payment->proof_path) }}" target="_blank"
                                         class="btn btn-sm btn-outline-primary">
-                                        Lihat
+                                        Lihat Bukti
                                     </a>
                                 @else
                                     <span class="text-muted">-</span>
                                 @endif
                             </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center text-muted">
-                                Belum ada transaksi
+
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ route('dashboard.transaksi.data-pembayaran.detail', ['payment' => $payment->id]) }}"
+                                        class="link-reset fs-18 p-1">
+                                        <i class="ti ti-eye"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
 
             <div class="mt-3">
-                {{ $this->transactions()->links(data: ['scrollTo' => '#table-transaction']) }}
+                {{ $this->payments()->links(data: ['scrollTo' => '#table-payment']) }}
             </div>
         </div>
     </div>

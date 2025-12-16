@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\SeminarStatus;
 use App\Models\User;
 use App\Models\Registration;
 use Spatie\Sluggable\HasSlug;
@@ -26,7 +27,8 @@ class Seminar extends Model
 
     protected $casts = [
         'date_start' => 'datetime',
-        'price' => 'decimal:2'
+        'price' => 'decimal:2',
+        'status' => SeminarStatus::class
     ];
     public function getSlugOptions(): SlugOptions
     {

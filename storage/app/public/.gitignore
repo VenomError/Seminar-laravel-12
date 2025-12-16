@@ -1,2 +1,16 @@
+# ignore semua file
 *
+
+# tetap track .gitignore
 !.gitignore
+
+# unignore folder payment
+!payment/
+!seminar/
+
+# ignore semua isi folder payment
+payment/*
+seminar/*
+
+# kecualikan hanya file ini
+!payment/bukti-pembayaran.png
