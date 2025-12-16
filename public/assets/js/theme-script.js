@@ -9,7 +9,7 @@ document.querySelector("html").setAttribute('data-width', localStorage.getItem('
 
 let themesettings = `
 <div class="sidebar-contact">
-    <div class="toggle-theme"  data-bs-toggle="offcanvas" data-bs-target="#theme-setting"><i class="ti ti-settings"></i></div>
+    <div class="toggle-theme d-none"  data-bs-toggle="offcanvas" data-bs-target="#theme-setting"><i class="ti ti-settings"></i></div>
     </div>
     <div class="sidebar-themesettings offcanvas offcanvas-end" id="theme-setting">
     <div class="offcanvas-header d-flex align-items-center justify-content-between bg-primary">
@@ -319,10 +319,10 @@ let themesettings = `
             </div>
         </div>    
     </div> `
-    
-    document.addEventListener("DOMContentLoaded", function() {
 
-        // 🔁 Unified dark/light mode toggle
+document.addEventListener("DOMContentLoaded", function () {
+
+    // 🔁 Unified dark/light mode toggle
     const toggleBtn = document.getElementById("light-dark-mode");
     const icon = toggleBtn?.querySelector("i");
 
@@ -351,315 +351,301 @@ let themesettings = `
     const initialTheme = getTheme(); // instead of 'savedTheme'
 
 
-        document.body.insertAdjacentHTML('beforeend', themesettings);
+    document.body.insertAdjacentHTML('beforeend', themesettings);
 
-    
-        // ✅ Debugging: Check if localStorage is being updated
-        const themeRadios = document.querySelectorAll('input[name="theme"]');
-        const sidebarRadios = document.querySelectorAll('input[name="sidebar"]');
-        const colorRadios = document.querySelectorAll('input[name="color"]');
-        const layoutRadios = document.querySelectorAll('input[name="LayoutTheme"]');
-        const topbarRadios = document.querySelectorAll('input[name="topbar"]');
-        const sidebarBgRadios = document.querySelectorAll('input[name="sidebarbg"]');
-        const sizeRadios = document.querySelectorAll('input[name="size"]');
-        const widthRadios = document.querySelectorAll('input[name="width"]');
-        const topbarbgRadios = document.querySelectorAll('input[name="topbarbg"]');
-        const resetButton = document.getElementById('resetbutton');
-        const sidebarBgContainer = document.getElementById('sidebarbgContainer');
-        const sidebarElement = document.querySelector('.sidebar'); // Adjust this selector to match your sidebar element
-    
-        function setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar, size, width) {
-            // Check if the sidebar element exists
-            if (!sidebarElement) {
-                console.error('Sidebar element not found');
-                return;
-            }
-    
-            // Setting data attributes and classes
-            document.documentElement.setAttribute('data-bs-theme', theme);
-            document.documentElement.setAttribute('data-sidebar', sidebarTheme);
-            document.documentElement.setAttribute('data-color', color);
-            document.documentElement.setAttribute('data-layout', layout);
-            document.documentElement.setAttribute('data-topbar', topbar);
-            document.documentElement.setAttribute('data-size', size);
-            document.documentElement.setAttribute('data-width', width);
-    
-            //track mini-layout set or not
-            layout_mini = 0;
-            if (layout === 'mini') {
-                document.body.classList.add("mini-sidebar");
-                document.body.classList.remove("menu-horizontal");
-                layout_mini = 1;
-            }  else if (layout === 'horizontal') {
-                document.body.classList.add("menu-horizontal");
-                document.body.classList.remove("mini-sidebar");
-            } else if (layout === 'horizontal-single') {
-                document.body.classList.add("menu-horizontal");
-                document.body.classList.remove("mini-sidebar");
-            } else if (layout === 'horizontal-overlay') {
-                document.body.classList.add("menu-horizontal");
-                document.body.classList.remove("mini-sidebar");
-            } else {
-                document.body.classList.remove("mini-sidebar", "menu-horizontal");
-            }
 
-            
-            if (size === 'compact') {
-                document.body.classList.add("mini-sidebar");
-                document.body.classList.remove("expand-menu");
-                layout_mini = 1;
-            } else if (size === 'hoverview') {
-                document.body.classList.add("expand-menu");
-                if(layout_mini == 0){ //remove only mini sidebar not set
-                    document.body.classList.remove("mini-sidebar");
-                }
-            }  else  {
-                if(layout_mini == 0){ //remove only mini sidebar not set
-                    document.body.classList.remove("mini-sidebar");
-                }
-                document.body.classList.remove("expand-menu");
-            }
+    // ✅ Debugging: Check if localStorage is being updated
+    const themeRadios = document.querySelectorAll('input[name="theme"]');
+    const sidebarRadios = document.querySelectorAll('input[name="sidebar"]');
+    const colorRadios = document.querySelectorAll('input[name="color"]');
+    const layoutRadios = document.querySelectorAll('input[name="LayoutTheme"]');
+    const topbarRadios = document.querySelectorAll('input[name="topbar"]');
+    const sidebarBgRadios = document.querySelectorAll('input[name="sidebarbg"]');
+    const sizeRadios = document.querySelectorAll('input[name="size"]');
+    const widthRadios = document.querySelectorAll('input[name="width"]');
+    const topbarbgRadios = document.querySelectorAll('input[name="topbarbg"]');
+    const resetButton = document.getElementById('resetbutton');
+    const sidebarBgContainer = document.getElementById('sidebarbgContainer');
+    const sidebarElement = document.querySelector('.sidebar'); // Adjust this selector to match your sidebar element
 
-            if (width === 'box') {
-                document.body.classList.add("layout-box-mode");
-                document.body.classList.add("mini-sidebar");
-                layout_mini = 1;
-            }else {
-                if(layout_mini == 0){ //remove only mini sidebar not set
-                    document.body.classList.remove("mini-sidebar");
-                }
-                document.body.classList.remove("layout-box-mode");
+    function setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar, size, width) {
+        // Check if the sidebar element exists
+        if (!sidebarElement) {
+            console.error('Sidebar element not found');
+            return;
+        }
+
+        // Setting data attributes and classes
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        document.documentElement.setAttribute('data-sidebar', sidebarTheme);
+        document.documentElement.setAttribute('data-color', color);
+        document.documentElement.setAttribute('data-layout', layout);
+        document.documentElement.setAttribute('data-topbar', topbar);
+        document.documentElement.setAttribute('data-size', size);
+        document.documentElement.setAttribute('data-width', width);
+
+        //track mini-layout set or not
+        layout_mini = 0;
+        if (layout === 'mini') {
+            document.body.classList.add("mini-sidebar");
+            document.body.classList.remove("menu-horizontal");
+            layout_mini = 1;
+        } else if (layout === 'horizontal') {
+            document.body.classList.add("menu-horizontal");
+            document.body.classList.remove("mini-sidebar");
+        } else if (layout === 'horizontal-single') {
+            document.body.classList.add("menu-horizontal");
+            document.body.classList.remove("mini-sidebar");
+        } else if (layout === 'horizontal-overlay') {
+            document.body.classList.add("menu-horizontal");
+            document.body.classList.remove("mini-sidebar");
+        } else {
+            document.body.classList.remove("mini-sidebar", "menu-horizontal");
+        }
+
+
+        if (size === 'compact') {
+            document.body.classList.add("mini-sidebar");
+            document.body.classList.remove("expand-menu");
+            layout_mini = 1;
+        } else if (size === 'hoverview') {
+            document.body.classList.add("expand-menu");
+            if (layout_mini == 0) { //remove only mini sidebar not set
+                document.body.classList.remove("mini-sidebar");
             }
-            if (((width === 'box') && (layout === 'horizontal')) || ((width === 'box') && (layout === 'horizontal-overlay')) ||
+        } else {
+            if (layout_mini == 0) { //remove only mini sidebar not set
+                document.body.classList.remove("mini-sidebar");
+            }
+            document.body.classList.remove("expand-menu");
+        }
+
+        if (width === 'box') {
+            document.body.classList.add("layout-box-mode");
+            document.body.classList.add("mini-sidebar");
+            layout_mini = 1;
+        } else {
+            if (layout_mini == 0) { //remove only mini sidebar not set
+                document.body.classList.remove("mini-sidebar");
+            }
+            document.body.classList.remove("layout-box-mode");
+        }
+        if (((width === 'box') && (layout === 'horizontal')) || ((width === 'box') && (layout === 'horizontal-overlay')) ||
             ((width === 'box') && (layout === 'horizontal-single')) || ((width === 'box') && (layout === 'without-header'))) {
-                    document.body.classList.remove("mini-sidebar");
-            }
-            
-            // Saving to localStorage
-            localStorage.setItem('theme', theme);
-            localStorage.setItem('sidebarTheme', sidebarTheme);
-            localStorage.setItem('color', color);
-            localStorage.setItem('layout', layout);
-            localStorage.setItem('topbar', topbar);
-            localStorage.setItem('size', size);
-            localStorage.setItem('width', width);
-    
-            // Show/hide sidebar background options based on layout selection
-            if (layout === 'box' && sidebarBgContainer) {
-                sidebarBgContainer.classList.add('show');
-            } else if (sidebarBgContainer) {
-                sidebarBgContainer.classList.remove('show');
-            }
-        }
-    
-        function handleSidebarBgChange() {
-            const sidebarBg = document.querySelector('input[name="sidebarbg"]:checked') ? document.querySelector('input[name="sidebarbg"]:checked').value : null;
-    
-            if (sidebarBg) {
-                document.body.setAttribute('data-sidebarbg', sidebarBg);
-                localStorage.setItem('sidebarBg', sidebarBg);
-            } else {
-                document.body.removeAttribute('data-sidebarbg');
-                localStorage.removeItem('sidebarBg');
-            }
+            document.body.classList.remove("mini-sidebar");
         }
 
-        function handleTopbarBgChange() {
-            const topbarbg = document.querySelector('input[name="topbarbg"]:checked') ? document.querySelector('input[name="topbarbg"]:checked').value : null;
-    
-            if (topbarbg) {
-                document.body.setAttribute('data-topbarbg', topbarbg);
-                localStorage.setItem('topbarbg', topbarbg);
-            } else {
-                document.body.removeAttribute('data-topbarbg');
-                localStorage.removeItem('topbarbg');
-            }
-        }
-    
-        function handleInputChange() {
-           const theme = localStorage.getItem('theme') || 'light';
+        // Saving to localStorage
+        localStorage.setItem('theme', theme);
+        localStorage.setItem('sidebarTheme', sidebarTheme);
+        localStorage.setItem('color', color);
+        localStorage.setItem('layout', layout);
+        localStorage.setItem('topbar', topbar);
+        localStorage.setItem('size', size);
+        localStorage.setItem('width', width);
 
-            const layout = document.querySelector('input[name="LayoutTheme"]:checked').value;
-            
-            color = localStorage.getItem('primaryRGB');
-            sidebarTheme = localStorage.getItem('sidebarRGB');
-            topbar = localStorage.getItem('topbarRGB');
-            
-            if(document.querySelector('input[name="color"]:checked') != null)
-            {
-                color = document.querySelector('input[name="color"]:checked').value;
-            }else{
-                color = 'all'
-            }
-
-            if(document.querySelector('input[name="sidebar"]:checked') != null)
-            {
-                sidebarTheme = document.querySelector('input[name="sidebar"]:checked').value;
-            }else{
-                sidebarTheme = 'all'
-            }
-
-            if(document.querySelector('input[name="topbar"]:checked') != null)
-            {
-                topbar = document.querySelector('input[name="topbar"]:checked').value;
-            }else{
-                topbar = 'all'
-            }
-    
-            //setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar, size, width);
-            setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar);
-        }
-
-      
-    
-        function resetThemeAndSidebarThemeAndColorAndBg() {
-            setThemeAndSidebarTheme('light', 'light', 'primary', 'default', 'white', 'default', 'fluid');
-            document.body.removeAttribute('data-sidebarbg');
-            document.getElementById('lightSidebar').checked = true;
-            document.getElementById('primaryColor').checked = true;
-            document.getElementById('defaultLayout').checked = true;
-            document.getElementById('whiteTopbar').checked = true;
-          //  document.getElementById('defaultSize').checked = true;
-            document.getElementById('fluidWidth').checked = true;
-    
-            const checkedSidebarBg = document.querySelector('input[name="sidebarbg"]:checked');
-            if (checkedSidebarBg) {
-                checkedSidebarBg.checked = false;
-            }
-    
-            localStorage.removeItem('sidebarBg');
-
-            const checkedTopbarBg = document.querySelector('input[name="topbarbg"]:checked');
-            if (checkedTopbarBg) {
-                checkedTopbarBg.checked = false;
-            }
-    
-            localStorage.removeItem('topbarbg');
-
-            document.documentElement.setAttribute("data-bs-theme", "light");
-
-            disableDarkMode(); 
-
-        }
-    
-        // Adding event listeners
-        themeRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
-        sidebarRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
-        colorRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
-        layoutRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
-        topbarRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
-        sizeRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
-        widthRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
-        sidebarBgRadios.forEach(radio => radio.addEventListener('change', handleSidebarBgChange));
-        topbarbgRadios.forEach(radio => radio.addEventListener('change', handleTopbarBgChange));
-        resetButton.addEventListener('click', resetThemeAndSidebarThemeAndColorAndBg);
-    
-        // Initial setup from localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
-
-      // const savedTheme = localStorage.getItem('theme') || 'light';
-        savedSidebarTheme = localStorage.getItem('sidebarTheme');
-        savedColor = localStorage.getItem('color');
-        const savedLayout = localStorage.getItem('layout') || 'default';
-        savedTopbar = localStorage.getItem('topbar');
-        const savedSize = localStorage.getItem('size') || 'default';
-        const savedWidth = localStorage.getItem('width') || 'fluid';
-        const savedSidebarBg = localStorage.getItem('sidebarBg') || null;
-        const savedTopbarBg = localStorage.getItem('topbarbg') || null;
-
-        // setup theme color all
-        const savedColorPickr = localStorage.getItem('primaryRGB') 
-        if((savedColor == null) && (savedColorPickr == null))
-        {
-            savedColor = 'primary';
-        }else if((savedColorPickr != null) && (savedColor == null))
-        {
-            savedColor = 'all';
-            let html = document.querySelector("html");
-            html.style.setProperty("--primary-rgb",  savedColorPickr);
-        }
-
-        // setup theme topbar all
-        const savedTopbarPickr = localStorage.getItem('topbarRGB') 
-        if((savedTopbar == null) && (savedTopbarPickr == null))
-        {
-            savedTopbar = 'white';
-        }else if((savedTopbarPickr != null) && (savedTopbar == null))
-        {
-            savedTopbar = 'all';
-            let html = document.querySelector("html");
-            html.style.setProperty("--topbar-rgb",  savedTopbarPickr);
-        }
- 
-        // setup theme color all
-        const savedSidebarPickr = localStorage.getItem('sidebarRGB') 
-        if((savedSidebarTheme == null) && (savedSidebarPickr == null))
-        {
-            savedSidebarTheme = 'light';
-        } else if((savedSidebarPickr != null) && (savedSidebarTheme == null))
-        {
-           savedSidebarTheme = 'all';
-            let html = document.querySelector("html");
-            html.style.setProperty("--sidebar-rgb",  savedSidebarPickr);
-        }
-    
-        setThemeAndSidebarTheme(savedTheme, savedSidebarTheme, savedColor, savedLayout, savedTopbar, savedSize, savedWidth);
-    
-        if (savedSidebarBg) {
-            document.body.setAttribute('data-sidebarbg', savedSidebarBg);
-        } else {
-            document.body.removeAttribute('data-sidebarbg');
-        }
-
-        if (savedTopbarBg) {
-            document.body.setAttribute('data-topbarbg', savedTopbarBg);
-        } else {
-            document.body.removeAttribute('data-topbarbg');
-        }
-    
-        // Check and set radio buttons based on saved preferences
-        if (document.getElementById(`${savedTheme}Theme`)) {
-            document.getElementById(`${savedTheme}Theme`).checked = true;
-        }
-        if (document.getElementById(`${savedSidebarTheme}Sidebar`)) {
-            document.getElementById(`${savedSidebarTheme}Sidebar`).checked = true;
-        }
-        if (document.getElementById(`${savedColor}Color`)) {
-            document.getElementById(`${savedColor}Color`).checked = true;
-        }
-        if (document.getElementById(`${savedLayout}Layout`)) {
-            document.getElementById(`${savedLayout}Layout`).checked = true;
-        }
-        if (document.getElementById(`${savedTopbar}Topbar`)) {
-            document.getElementById(`${savedTopbar}Topbar`).checked = true;
-        }
-        if (document.getElementById(`${savedSize}Size`)) {
-            document.getElementById(`${savedSize}Size`).checked = true;
-        }
-        if (document.getElementById(`${savedWidth}Width`)) {
-            document.getElementById(`${savedWidth}Width`).checked = true;
-        }
-        if (savedSidebarBg && document.getElementById(`${savedSidebarBg}`)) {
-            document.getElementById(`${savedSidebarBg}`).checked = true;
-        }
-        if (savedTopbarBg && document.getElementById(`${savedTopbarBg}`)) {
-            document.getElementById(`${savedTopbarBg}`).checked = true;
-        }
-    
-        // Initially hide sidebar background options based on layout
-        if (savedLayout !== 'box' && sidebarBgContainer) {
+        // Show/hide sidebar background options based on layout selection
+        if (layout === 'box' && sidebarBgContainer) {
+            sidebarBgContainer.classList.add('show');
+        } else if (sidebarBgContainer) {
             sidebarBgContainer.classList.remove('show');
         }
-    });
-    
-   
-    
-    
+    }
+
+    function handleSidebarBgChange() {
+        const sidebarBg = document.querySelector('input[name="sidebarbg"]:checked') ? document.querySelector('input[name="sidebarbg"]:checked').value : null;
+
+        if (sidebarBg) {
+            document.body.setAttribute('data-sidebarbg', sidebarBg);
+            localStorage.setItem('sidebarBg', sidebarBg);
+        } else {
+            document.body.removeAttribute('data-sidebarbg');
+            localStorage.removeItem('sidebarBg');
+        }
+    }
+
+    function handleTopbarBgChange() {
+        const topbarbg = document.querySelector('input[name="topbarbg"]:checked') ? document.querySelector('input[name="topbarbg"]:checked').value : null;
+
+        if (topbarbg) {
+            document.body.setAttribute('data-topbarbg', topbarbg);
+            localStorage.setItem('topbarbg', topbarbg);
+        } else {
+            document.body.removeAttribute('data-topbarbg');
+            localStorage.removeItem('topbarbg');
+        }
+    }
+
+    function handleInputChange() {
+        const theme = localStorage.getItem('theme') || 'light';
+
+        const layout = document.querySelector('input[name="LayoutTheme"]:checked').value;
+
+        color = localStorage.getItem('primaryRGB');
+        sidebarTheme = localStorage.getItem('sidebarRGB');
+        topbar = localStorage.getItem('topbarRGB');
+
+        if (document.querySelector('input[name="color"]:checked') != null) {
+            color = document.querySelector('input[name="color"]:checked').value;
+        } else {
+            color = 'all'
+        }
+
+        if (document.querySelector('input[name="sidebar"]:checked') != null) {
+            sidebarTheme = document.querySelector('input[name="sidebar"]:checked').value;
+        } else {
+            sidebarTheme = 'all'
+        }
+
+        if (document.querySelector('input[name="topbar"]:checked') != null) {
+            topbar = document.querySelector('input[name="topbar"]:checked').value;
+        } else {
+            topbar = 'all'
+        }
+
+        //setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar, size, width);
+        setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar);
+    }
+
+
+
+    function resetThemeAndSidebarThemeAndColorAndBg() {
+        setThemeAndSidebarTheme('light', 'light', 'primary', 'default', 'white', 'default', 'fluid');
+        document.body.removeAttribute('data-sidebarbg');
+        document.getElementById('lightSidebar').checked = true;
+        document.getElementById('primaryColor').checked = true;
+        document.getElementById('defaultLayout').checked = true;
+        document.getElementById('whiteTopbar').checked = true;
+        //  document.getElementById('defaultSize').checked = true;
+        document.getElementById('fluidWidth').checked = true;
+
+        const checkedSidebarBg = document.querySelector('input[name="sidebarbg"]:checked');
+        if (checkedSidebarBg) {
+            checkedSidebarBg.checked = false;
+        }
+
+        localStorage.removeItem('sidebarBg');
+
+        const checkedTopbarBg = document.querySelector('input[name="topbarbg"]:checked');
+        if (checkedTopbarBg) {
+            checkedTopbarBg.checked = false;
+        }
+
+        localStorage.removeItem('topbarbg');
+
+        document.documentElement.setAttribute("data-bs-theme", "light");
+
+        disableDarkMode();
+
+    }
+
+    // Adding event listeners
+    themeRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
+    sidebarRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
+    colorRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
+    layoutRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
+    topbarRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
+    sizeRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
+    widthRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
+    sidebarBgRadios.forEach(radio => radio.addEventListener('change', handleSidebarBgChange));
+    topbarbgRadios.forEach(radio => radio.addEventListener('change', handleTopbarBgChange));
+    resetButton.addEventListener('click', resetThemeAndSidebarThemeAndColorAndBg);
+
+    // Initial setup from localStorage
+    const savedTheme = localStorage.getItem('theme') || 'light';
+
+    // const savedTheme = localStorage.getItem('theme') || 'light';
+    savedSidebarTheme = localStorage.getItem('sidebarTheme');
+    savedColor = localStorage.getItem('color');
+    const savedLayout = localStorage.getItem('layout') || 'default';
+    savedTopbar = localStorage.getItem('topbar');
+    const savedSize = localStorage.getItem('size') || 'default';
+    const savedWidth = localStorage.getItem('width') || 'fluid';
+    const savedSidebarBg = localStorage.getItem('sidebarBg') || null;
+    const savedTopbarBg = localStorage.getItem('topbarbg') || null;
+
+    // setup theme color all
+    const savedColorPickr = localStorage.getItem('primaryRGB')
+    if ((savedColor == null) && (savedColorPickr == null)) {
+        savedColor = 'primary';
+    } else if ((savedColorPickr != null) && (savedColor == null)) {
+        savedColor = 'all';
+        let html = document.querySelector("html");
+        html.style.setProperty("--primary-rgb", savedColorPickr);
+    }
+
+    // setup theme topbar all
+    const savedTopbarPickr = localStorage.getItem('topbarRGB')
+    if ((savedTopbar == null) && (savedTopbarPickr == null)) {
+        savedTopbar = 'white';
+    } else if ((savedTopbarPickr != null) && (savedTopbar == null)) {
+        savedTopbar = 'all';
+        let html = document.querySelector("html");
+        html.style.setProperty("--topbar-rgb", savedTopbarPickr);
+    }
+
+    // setup theme color all
+    const savedSidebarPickr = localStorage.getItem('sidebarRGB')
+    if ((savedSidebarTheme == null) && (savedSidebarPickr == null)) {
+        savedSidebarTheme = 'light';
+    } else if ((savedSidebarPickr != null) && (savedSidebarTheme == null)) {
+        savedSidebarTheme = 'all';
+        let html = document.querySelector("html");
+        html.style.setProperty("--sidebar-rgb", savedSidebarPickr);
+    }
+
+    setThemeAndSidebarTheme(savedTheme, savedSidebarTheme, savedColor, savedLayout, savedTopbar, savedSize, savedWidth);
+
+    if (savedSidebarBg) {
+        document.body.setAttribute('data-sidebarbg', savedSidebarBg);
+    } else {
+        document.body.removeAttribute('data-sidebarbg');
+    }
+
+    if (savedTopbarBg) {
+        document.body.setAttribute('data-topbarbg', savedTopbarBg);
+    } else {
+        document.body.removeAttribute('data-topbarbg');
+    }
+
+    // Check and set radio buttons based on saved preferences
+    if (document.getElementById(`${savedTheme}Theme`)) {
+        document.getElementById(`${savedTheme}Theme`).checked = true;
+    }
+    if (document.getElementById(`${savedSidebarTheme}Sidebar`)) {
+        document.getElementById(`${savedSidebarTheme}Sidebar`).checked = true;
+    }
+    if (document.getElementById(`${savedColor}Color`)) {
+        document.getElementById(`${savedColor}Color`).checked = true;
+    }
+    if (document.getElementById(`${savedLayout}Layout`)) {
+        document.getElementById(`${savedLayout}Layout`).checked = true;
+    }
+    if (document.getElementById(`${savedTopbar}Topbar`)) {
+        document.getElementById(`${savedTopbar}Topbar`).checked = true;
+    }
+    if (document.getElementById(`${savedSize}Size`)) {
+        document.getElementById(`${savedSize}Size`).checked = true;
+    }
+    if (document.getElementById(`${savedWidth}Width`)) {
+        document.getElementById(`${savedWidth}Width`).checked = true;
+    }
+    if (savedSidebarBg && document.getElementById(`${savedSidebarBg}`)) {
+        document.getElementById(`${savedSidebarBg}`).checked = true;
+    }
+    if (savedTopbarBg && document.getElementById(`${savedTopbarBg}`)) {
+        document.getElementById(`${savedTopbarBg}`).checked = true;
+    }
+
+    // Initially hide sidebar background options based on layout
+    if (savedLayout !== 'box' && sidebarBgContainer) {
+        sidebarBgContainer.classList.remove('show');
+    }
+});
 
 
 
 
-    
 
 
 
@@ -668,5 +654,10 @@ let themesettings = `
 
 
 
-    
+
+
+
+
+
+
 

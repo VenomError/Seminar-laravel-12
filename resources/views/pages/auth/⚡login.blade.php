@@ -19,7 +19,7 @@ new
         ]);
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            return redirect()->route('dashboard');
+            return redirect()->intended(auth()->user()->role->pathRedirect());
         }
         $this->reset('password');
         sweetalert()->error('Email atau Password Salah', title: 'Login Gagal');
