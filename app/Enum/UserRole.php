@@ -5,7 +5,6 @@ namespace App\Enum;
 enum UserRole: string
 {
     case ADMIN = 'admin';
-    case COMMITTEE = 'committee';
     case PARTICIPANT = 'participant';
 
     public static function values()
@@ -17,7 +16,6 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => 'Admin',
-            self::COMMITTEE => 'Committee',
             self::PARTICIPANT => 'Participant',
         };
     }
@@ -26,7 +24,6 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => '/dashboard',
-            self::COMMITTEE => '/committee',
             self::PARTICIPANT => '/',
         };
     }
@@ -34,7 +31,6 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => 'sidenav.admin',
-            self::COMMITTEE => 'sidenav.committee',
             self::PARTICIPANT => 'sidenav.participant',
         };
     }
@@ -42,7 +38,6 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => 'primary',
-            self::COMMITTEE => 'warning',
             self::PARTICIPANT => 'success',
         };
     }

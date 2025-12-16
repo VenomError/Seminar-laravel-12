@@ -111,7 +111,7 @@ new class extends Component {
                                 <th>Status</th>
                                 <td>
                                     <span class="badge bg-success">
-                                        {{ str($registration->payment->status)->title() }}
+                                        {{ str($registration->payment->status->value)->title() }}
                                     </span>
                                 </td>
                             </tr>

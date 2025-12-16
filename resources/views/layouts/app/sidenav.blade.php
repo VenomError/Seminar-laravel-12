@@ -4,17 +4,17 @@
     <div class="sidebar-logo">
         <div>
             <!-- Logo Normal -->
-            <a href="index.html" class="logo logo-normal">
+            <a href="{{ auth()->user()?->role?->pathRedirect() ?? '' }}" class="logo logo-normal">
                 <img src="{{ asset('assets/img/logo.svg') }}" alt="Logo">
             </a>
 
             <!-- Logo Small -->
-            <a href="index.html" class="logo-small">
+            <a href="{{ auth()->user()?->role?->pathRedirect() ?? '' }}" class="logo-small">
                 <img src="{{ asset('assets/img/logo-small.svg') }}" alt="Logo">
             </a>
 
             <!-- Logo Dark -->
-            <a href="index.html" class="dark-logo">
+            <a href="{{ auth()->user()?->role?->pathRedirect() ?? '' }}" class="dark-logo">
                 <img src="{{ asset('assets/img/logo-white.svg') }}" alt="Logo">
             </a>
         </div>

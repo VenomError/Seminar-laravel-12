@@ -69,10 +69,7 @@ class User extends Authenticatable
     {
         return $this->whereRole(UserRole::ADMIN);
     }
-    public function scopeCommittee(Builder $query): Builder
-    {
-        return $this->whereRole(UserRole::COMMITTEE);
-    }
+
     public function scopeParticipant(Builder $query): Builder
     {
         return $this->whereRole(UserRole::PARTICIPANT);

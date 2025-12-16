@@ -17,7 +17,7 @@ Route::get('logout', function () {
     Session::flush();
 
     return redirect()->route('login');
-});
+})->middleware('auth')->name('logout');
 Route::middleware(['auth', 'role:admin'])->prefix('dashboard')->name('dashboard')->group(function () {
     Route::livewire('/', 'pages::dashboard.index');
     // Master Data

@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $count = (int) $this->command->ask("How many users do you want to create?");
-        $role = $this->command->choice("Select a role", ["committee", "participant"]);
+        $role = "participant";
         $repo = new UserRepository();
         $this->command->withProgressBar(range(1, $count), function ($i) use ($role, $repo) {
             try {
